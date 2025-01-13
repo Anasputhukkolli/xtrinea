@@ -482,7 +482,7 @@ sendButton.addEventListener("click", () => {
 
 // Generate bot responses based on user input
 function generateBotResponse(userMessage, count) {
-  if (userMessage.includes("location") || userMessage.includes("place")) {
+  if (userMessage.includes("location") || userMessage.includes("place")|| userMessage.includes("Where")) {
     return 'Here is the <a href="https://maps.app.goo.gl/X8sd3b5NNZR4aH7a9" target="_blank">Google Maps link</a>';
   }
 
@@ -491,7 +491,7 @@ function generateBotResponse(userMessage, count) {
   }
 
   if (userMessage.includes("phone") || userMessage.includes("number") || userMessage.includes("call")) {
-    return 'Call us at <a href="tel:+994775768">994775768</a>';
+    return 'Call us at <a href="tel:9947757685">9947757685</a>';
   }
 
   if (userMessage.includes("how are you") || userMessage.includes("what about you")) {
@@ -501,8 +501,15 @@ function generateBotResponse(userMessage, count) {
   if (userMessage.includes("xt") || userMessage.includes("xtrinia")) {
     return "XT is a 3-day event with cultural, technical, and non-technical events.";
   }
+  if (userMessage.includes("tickets") || userMessage.includes("buy")) {
+    return "Tickets are available at soon";
+  }
+  if (userMessage.includes("date") || userMessage.includes("day")) {
+    return "7,8,9/2/2025   (fri,sat,sun)";
+  }
+  
 
-  return "I'm here to assist you further.";
+  return 'Call us at <a href="tel:9947757685">9947757685</a> to know more' ;
 }
 
 // Display messages in the chat box
