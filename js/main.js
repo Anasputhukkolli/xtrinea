@@ -444,81 +444,99 @@ const sendButton = document.getElementById("sendBtn");
 const userInput = document.getElementById("userInput");
 const chatBox = document.getElementById("chatBox");
 
+if (!chatbotIcon || !chatPopup || !sendButton || !userInput || !chatBox) {
+  console.error("One or more required elements are missing.");
+  throw new Error("Chatbot initialization failed due to missing elements.");
+}
+
 let messageCount = 0; // Counter to track the number of messages
 
 // Toggle chat popup visibility when clicking on the icon
 chatbotIcon.addEventListener("click", (event) => {
-  event.stopPropagation(); // Prevent click from bubbling up to the document
-  if (chatPopup.style.display === "block") {
-    // Reset the chat if closing the popup
-    chatBox.innerHTML = ""; // Clear the chat history
-    messageCount = 0; // Reset the message count
+  event.stopPropagation();
+  const isPopupVisible = chatPopup.style.display === "block";
+
+  if (isPopupVisible) {
+    chatBox.innerHTML = ""; // Clear chat history
+    messageCount = 0; // Reset message count
   }
-  chatPopup.style.display =
-    chatPopup.style.display === "none" || chatPopup.style.display === ""
-      ? "block"
-      : "none";
+
+  chatPopup.style.display = isPopupVisible ? "none" : "block";
 });
 
 // Handle user input and bot response
 sendButton.addEventListener("click", () => {
   const userMessage = userInput.value.trim();
   if (userMessage) {
-    // Display user message
-    displayMessage(userMessage, "user");
-
-    // Bot response based on the number of user messages
+    displayMessage(escapeHTML(userMessage), "user"); // Sanitize user input
     messageCount++;
 
     setTimeout(() => {
-      let botResponse = "";
-      if (userMessage.includes("location") || userMessage.includes("place")) {
-        botResponse =
-          'Here is the <a href="https://maps.app.goo.gl/X8sd3b5NNZR4aH7a9" target="_blank">Google Maps link</a>'; // Google Maps link
-      } else if (messageCount === 1) {
-        botResponse = "Hey, how can I help you?"; // First response
-      } else if (userMessage.includes("phone") || userMessage.includes("number") || userMessage.includes("call")) {
-        botResponse =
-          ' call Us <a href="tel:+994775768">994775768</a>'; // Clickable phone number
-      } else if (userMessage.includes("how are you") || userMessage.includes("what about you")) {
-        botResponse =
-          'Fine, glad to meet you!'; // Response for "how are you"
-      } else if (userMessage.includes("xt") || userMessage.includes("xtrinia")) {
-        botResponse =
-          "XT is a 3-day event with cultural, technical, and non-technical events."; // Event description
-      } else {
-        botResponse = "I'm here to assist you further."; // Default response
-      }
-
+      const botResponse = generateBotResponse(userMessage, messageCount);
       displayMessage(botResponse, "bot");
     }, 1000);
 
-    // Clear input field
-    userInput.value = "";
+    userInput.value = ""; // Clear input field
   }
 });
+
+// Generate bot responses based on user input
+function generateBotResponse(userMessage, count) {
+  if (userMessage.includes("location") || userMessage.includes("place")) {
+    return 'Here is the <a href="https://maps.app.goo.gl/X8sd3b5NNZR4aH7a9" target="_blank">Google Maps link</a>';
+  }
+
+  if (count === 1) {
+    return "Hey, how can I help you?";
+  }
+
+  if (userMessage.includes("phone") || userMessage.includes("number") || userMessage.includes("call")) {
+    return 'Call us at <a href="tel:+994775768">994775768</a>';
+  }
+
+  if (userMessage.includes("how are you") || userMessage.includes("what about you")) {
+    return "I'm fine, glad to meet you!";
+  }
+
+  if (userMessage.includes("xt") || userMessage.includes("xtrinia")) {
+    return "XT is a 3-day event with cultural, technical, and non-technical events.";
+  }
+
+  return "I'm here to assist you further.";
+}
 
 // Display messages in the chat box
 function displayMessage(message, sender) {
   const messageElement = document.createElement("div");
   messageElement.classList.add("message", sender);
-  messageElement.innerHTML = message; // Use innerHTML to render HTML content (like <a> tags)
-  chatBox.appendChild(messageElement);
 
-  // Scroll to the bottom of the chat box
-  chatBox.scrollTop = chatBox.scrollHeight;
+  if (sender === "bot") {
+    messageElement.innerHTML = message; // Allow bot to render HTML
+  } else {
+    messageElement.textContent = message; // Sanitize user messages
+  }
+
+  chatBox.appendChild(messageElement);
+  chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+}
+
+// Escape HTML to prevent XSS attacks
+function escapeHTML(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
 }
 
 // Close the chat popup if clicked outside
 document.addEventListener("click", (event) => {
   if (!chatPopup.contains(event.target) && event.target !== chatbotIcon) {
     chatPopup.style.display = "none";
-    chatBox.innerHTML = ""; // Clear the chat when closing the popup
-    messageCount = 0; // Reset the message count
+    chatBox.innerHTML = ""; // Clear chat history
+    messageCount = 0; // Reset message count
   }
 });
 
 // Prevent the popup from closing when clicking inside the chat window
 chatPopup.addEventListener("click", (event) => {
-  event.stopPropagation(); // Prevent click from bubbling up to the document
+  event.stopPropagation();
 });
