@@ -401,6 +401,7 @@ function updateCountdown() {
 
 const countdownInterval = setInterval(updateCountdown, 1000);
 updateCountdown();
+
 const buttons = document.querySelectorAll(".openPopup");
 const customAlert = document.getElementById("customAlert");
 const overlay = document.getElementById("overlay");
@@ -422,22 +423,19 @@ function showLoadingSpinner() {
 
   // Simulate loading process
   setTimeout(() => {
-    showCustomAlert(); // Show the custom alert after loading
+    redirectToLink(); // Redirect to the specified link after loading
   }, 2000); // Delay of 2 seconds to simulate loading
 }
 
-// Function to show the custom alert with the message after loading
-function showCustomAlert() {
+// Function to redirect to the specified URL
+function redirectToLink() {
+  overlay.style.display = "none"; // Hide overlay
   loadingSpinner.style.display = "none"; // Hide loading spinner
-  customAlert.style.display = "block"; // Show the custom alert container
-  alertMessage.style.display = "block"; // Show the alert message
+  window.open("https://makemypass.com/xtrinia6", "_blank"); // Redirect to the link
 }
 
 // Function to close the custom alert
-function closeAlert() {
-  customAlert.style.display = "none";
-  overlay.style.display = "none";
-}
+
 const chatbotIcon = document.getElementById("chatbot");
 const chatPopup = document.getElementById("chatPopup");
 const sendButton = document.getElementById("sendBtn");
@@ -486,7 +484,7 @@ function generateBotResponse(userMessage, count) {
     return 'Here is the <a href="https://maps.app.goo.gl/X8sd3b5NNZR4aH7a9" target="_blank">Google Maps link</a>';
   }
 
-  if (count === 1) {
+  if (userMessage.includes("hey") || userMessage.includes("helo") || userMessage.includes("man")) {
     return "Hey, how can I help you?";
   }
 
@@ -502,7 +500,7 @@ function generateBotResponse(userMessage, count) {
     return "XT is a 3-day event with cultural, technical, and non-technical events.";
   }
   if (userMessage.includes("tickets") || userMessage.includes("buy")) {
-    return "Tickets are available at soon";
+    return '<a href="https://makemypass.com/xtrinia6" target="_blank">Grab Your Tickets 🙌</a>';
   }
   if (userMessage.includes("date") || userMessage.includes("day")) {
     return "7,8,9/2/2025   (fri,sat,sun)";
