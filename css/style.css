@@ -82,6 +82,7 @@ a,
 button {
   color: #1F1F1F;
   outline: medium none;
+  text-decoration: none !important;
 }
 
 /* line 52, ../../Arafath/CL/December/236. Event-02/HTML/scss/theme-default.scss */
@@ -6239,7 +6240,7 @@ h6 {
   /* Adjust the height to match the spinner's size */
   transform: translate(-50%, -50%);
   /* Centering adjustment */
-  z-index: 1001;
+  z-index: 500000;
   width: 100px;
   /* Spinner size (adjust as needed) */
   height: 100px;
@@ -6433,7 +6434,8 @@ h6 {
   -moz-border-radius: 50%;
   border-radius: 50%;
 }
-#chatbot img{
+
+#chatbot img {
   width: 25px;
 }
 
@@ -6444,6 +6446,7 @@ h6 {
   right: 20px;
   z-index: 2147483647;
 }
+
 /* Chatbot button */
 #chatbot {
   cursor: pointer;
@@ -6506,9 +6509,11 @@ h6 {
   background-color: #c3e6cb;
   align-self: flex-end;
 }
-.message a{
+
+.message a {
   color: #1d3bd3;
 }
+
 /* Input box */
 .input-box {
   position: relative;
@@ -6535,22 +6540,24 @@ h6 {
 /* Popup open animation */
 @keyframes popupOpen {
   0% {
-      transform: scale(0);
+    transform: scale(0);
   }
+
   100% {
-      transform: scale(1);
+    transform: scale(1);
   }
 }
 
 /* Animation for new messages */
 @keyframes messageIn {
   0% {
-      opacity: 0;
-      transform: translateX(-50px);
+    opacity: 0;
+    transform: translateX(-50px);
   }
+
   100% {
-      opacity: 1;
-      transform: translateX(0);
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -6562,6 +6569,91 @@ h6 {
 .chat-popup.open {
   display: block;
 }
+
+
+
+.workshop-section {
+  padding: 60px 20px;
+  background: linear-gradient(to bottom, #000, #222);
+  text-align: center;
+}
+
+.workshop-section h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #e50914;
+  margin-bottom: 20px;
+}
+
+.workshop-section p {
+  color: #bbb;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+}
+
+/* .card1 {
+  background: url("../img/workshop1.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.card2 {
+  background: url("../img/workshop2.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.card3 {
+  background: url("../img/workshop3.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+} */
+.workshop-card {
+  background-color: #222 !important ;
+  border: none !important;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  height: 400px !important;
+}
+
+.workshop-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(229, 9, 20, 0.7);
+}
+
+.workshop-card .card-title {
+  color: #e50914;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.workshop-card .card-text {
+  color: #bbb;
+}
+
+.squid-shape {
+  font-size: 4rem;
+  color: #fff;
+}
+
+.squid-shape.circle {
+  color: #00d084;
+}
+
+.squid-shape.triangle {
+  color: #f2c744;
+}
+
+.squid-shape.square {
+  color: #e50914;
+} 
+.work_img{
+  width: 50% !important;
+}
+.work_para{
+  width: 50% !important ;
+}
+
 
 @media (max-width: 992px) {
   .slider_area .single_slider .slider_text a {
@@ -6576,5 +6668,11 @@ h6 {
 
   }
 
-  #loadingSpinner {}
-}
+  .work_img{
+    width: auto !important;
+  }
+  .work_para{
+    width: auto !important; ;
+  }}
+
+
